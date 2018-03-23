@@ -1,0 +1,8 @@
+# Data
+data/cifar10/cifar-10-batches-py
+dta_batch*
+*.png
+*.gif
+*.tar.gz
+data/cifar-10-batches-py
+
