@@ -227,13 +227,13 @@ class CNN(models.shared_base.SharedModel):
         ues the method in resenet
         https://github.com/pytorch/vision/blob/master/torchvision/models/resnet.py#L112-L118
         '''
-        pass
-        # for m in self.modules():
-        #     if isinstance(m, nn.Conv2d):
-        #         for param in m.parameters():
-        #             torch.nn.init.xavier_uniform(param)
-        #     elif isinstance(m, nn.BatchNorm2d):
-        #         m.weight.data.fill_(1)
+        
+        for m in self.modules():
+            m.cuda()
+            if isinstance(m, nn.Conv2d):
+                torch.nn.init.xavier_uniform(m.weight)
+            elif isinstance(m, nn.BatchNorm2d):
+                m.weight.data.fill_(1)
         #         m.bias.data.zero_()
         #for param in self.parameters():
         #    torch.nn.init.xavier_uniform(param)

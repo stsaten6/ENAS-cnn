@@ -187,9 +187,9 @@ class Trainer(object):
                                       f'defined')
         print("---- begin to init controller-----")
         self.controller = models.Controller(self.args)
-        self.controller = self.controller.cuda()
+        #self.controller = self.controller.cuda()
         print("===begin to cuda")
-        if self.args.num_gpu == 1:
+        if True:
             print("cuda")
             self.shared.cuda()
             self.controller.cuda()
@@ -237,11 +237,11 @@ class Trainer(object):
 
         loss = 0
         for dag in dags:
-            inputs = Variable(inputs)
-            targets = Variable(targets)
+            inputs = Variable(inputs.cuda())
+            targets = Variable(targets.cuda())
             # inputs = inputs.cuda()
-            targets = targets.cuda()
-            self.shared = self.shared.cuda()
+            #targets = targets.cuda()
+            #self.shared = self.shared.cuda()
             output  = self.shared(inputs, dag)
             sample_loss = (self.ce(output, targets) /
                            self.args.shared_num_sample)
@@ -274,7 +274,7 @@ class Trainer(object):
             if step > max_step:
                 break
             dags = self.controller.sample(self.args.shared_num_sample)
-            print(dags)
+            #print(dags)
             #TODO use iterator to create batch but need to add StopIteration
             #may be have some method to improve
             try:
@@ -283,7 +283,7 @@ class Trainer(object):
                 print("====>train_shared<====== finish one epoch")
                 break
                 train_iter = iter(self.train_data)
-            print(dags)
+            #print(dags)
             loss = self.get_loss(inputs,
                                 targets,
                                 dags)
@@ -296,7 +296,9 @@ class Trainer(object):
             self.shared_optim.step()
 
             total_loss += loss.data
-
+            if step % 20 == 0:
+                print("loss, ", total_loss, step, total_loss /(step+1))
+		
             if ((step % self.args.log_step) == 0) and (step > 0):
                 self._summarize_shared_train(total_loss, raw_total_loss)
                 raw_total_loss = 0
@@ -449,10 +451,10 @@ class Trainer(object):
                 inputs, targets = next(test_iter)
                 # inputs = Variable(inputs)
             #check if is train the controller will have what difference
-            inputs = Variable(inputs)
-            targets = Variable(output)
+            inputs = Variable(inputs.cuda())
+            targets = Variable(output.cuda())
             # inputs = inputs.cuda()
-            targets = targets.cuda()
+            #targets = targets.cuda()
             output = self.shared(inputs,
                                 dag,
                                 is_train=False)
