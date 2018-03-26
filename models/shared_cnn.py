@@ -87,6 +87,12 @@ class CNN(models.shared_base.SharedModel):
                 self.channel_bridge[layer_idx][previous_idx] = conv('1x1',
                                                                     self.channel[previous_idx],
                                                                     self.channel[layer_idx+1])
+        self._conv = nn.ModuleList([self.conv[idx][jdx]
+                                   for idx in self.conv
+                                   for jdx in self.conv[idx]])
+        self._channel_bridge = nn.ModuleList([self.channel_bridge[idx][jdx]
+                                              for idx in self.channel_bridge
+                                              for jdx in self.channel_bridge[idx]])
         print(self.conv)
         self.maxpool = torch.nn.MaxPool2d(2, 2)
         # self.predict = torch.nn.Conv2d(1024,10, 1)# for classification
@@ -95,6 +101,7 @@ class CNN(models.shared_base.SharedModel):
         self.downsample = torch.nn.AvgPool2d(kernel_size=2, stride=2)
         #use xavier to initialize parameter
         self.predict = torch.nn.Linear(1024, 10)
+        
         self.reset_parameters()
         print(f'# of parameters: {format(self.num_parameters, ",d")}')
 
@@ -229,7 +236,7 @@ class CNN(models.shared_base.SharedModel):
         '''
         
         for m in self.modules():
-            m.cuda()
+            #m.cuda()
             if isinstance(m, nn.Conv2d):
                 torch.nn.init.xavier_uniform(m.weight)
             elif isinstance(m, nn.BatchNorm2d):

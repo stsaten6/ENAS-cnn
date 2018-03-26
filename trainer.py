@@ -217,7 +217,7 @@ class Trainer(object):
             if self.epoch % self.args.save_epoch == 0:
                 with _get_no_grad_ctx_mgr():
                     best_dag = self.derive()
-                    self.evaluate(self.eval_data,
+                    self.evaluate(iter(self.test_data),
                                   best_dag,
                                   'val_best',
                                   max_num=self.args.batch_size*100)
@@ -368,7 +368,7 @@ class Trainer(object):
 
             dags, log_probs, entropies = self.controller.sample(
                 with_details=True)
-            print(dags)
+            #print(dags)
             np_entropies = entropies.data.cpu().numpy()
 
             with _get_no_grad_ctx_mgr():
@@ -409,8 +409,8 @@ class Trainer(object):
             self.controller_optim.step()
 
             total_loss += utils.to_item(loss.data)
-            if step%20 ==0:
-                print("total loss", total_loss, step, total_loss / (step+1))
+            #if step%20 ==0:
+            #    print("total loss", total_loss, step, total_loss / (step+1))
             if ((step % self.args.log_step) == 0) and (step > 0):
                 self._summarize_controller_train(total_loss,
                                                 adv_history,
@@ -441,8 +441,10 @@ class Trainer(object):
         # data = source[:max_num*self.max_length]
         total_loss = 0
         # pbar = range(0, data.size(0) - 1, self.max_length)
+        count = 0
         while True:
             try:
+                count +=1
                 inputs, targets = next(test_iter)
             except StopIteration:
                 print("========> finish evaluate on one epoch<======")
@@ -452,7 +454,7 @@ class Trainer(object):
                 # inputs = Variable(inputs)
             #check if is train the controller will have what difference
             inputs = Variable(inputs.cuda())
-            targets = Variable(output.cuda())
+            targets = Variable(targets.cuda())
             # inputs = inputs.cuda()
             #targets = targets.cuda()
             output = self.shared(inputs,
@@ -462,11 +464,11 @@ class Trainer(object):
             total_loss += len(inputs) * self.ce(output, targets).data
             ppl = math.exp(utils.to_item(total_loss) / (count + 1))
 
-        val_loss = utils.to_item(total_loss) / len(data)
+        val_loss = utils.to_item(total_loss) / count
         ppl = math.exp(val_loss)
         #TODO it's fix for rnn need to fix for cnn
-        self.tb.scalar_summary(f'eval/{name}_loss', val_loss, self.epoch)
-        self.tb.scalar_summary(f'eval/{name}_ppl', ppl, self.epoch)
+        #self.tb.scalar_summary(f'eval/{name}_loss', val_loss, self.epoch)
+        #self.tb.scalar_summary(f'eval/{name}_ppl', ppl, self.epoch)
         print(f'eval | loss: {val_loss:8.2f} | ppl: {ppl:8.2f}')
 
     def derive(self, sample_num=None, valid_iter=None):
@@ -475,13 +477,14 @@ class Trainer(object):
         """
         if sample_num is None:
             sample_num = self.args.derive_num_sample
-
+        if valid_iter == None:
+            valid_iter = iter(self.valid_data)
         dags, _, entropies = self.controller.sample(sample_num,
                                             with_details=True)
         max_R = 0
         best_dag = None
         for dag in dags:
-            R, _ = self.get_reward(dag, entropies, valid_iter)
+            R= self.get_reward(dag, entropies, valid_iter)
             if R.max() > max_R:
                 max_R = R.max()
                 best_dag = dag

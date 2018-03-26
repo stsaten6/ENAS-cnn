@@ -1,0 +1,611 @@
+srun: interrupt (one more within 1 sec to abort)
+srun: task 0: running
+srun: interrupt (one more within 1 sec to abort)
+srun: task 0: running
+srun: sending Ctrl-C to job 1542015.0
+Traceback (most recent call last):
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+  File "main.py", line 4, in <module>
+    import torch
+  File "/mnt/lustre/lianqing/anaconda3/lib/python3.6/site-packages/torch/__init__.py", line 37, in <module>
+slurmstepd: *** STEP 1542015.0 ON BJ-IDC1-10-10-30-130 CANCELLED AT 2018-03-26T10:53:06 ***
+    import numpy as np
+  File "/mnt/lustre/lianqing/anaconda3/lib/python3.6/site-packages/numpy/__init__.py", line 156, in <module>
+[*] Make directories : logs/cifar10_2018-03-26_10-53-43
+Files already downloaded and verified
+regularizing:
+----- begin to init cnn------
+defaultdict(<class 'dict'>, {0: {'1x1': Sequential(
+  (0): Conv2d(3, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(3, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(3, 128, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(3, 128, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(128, 128, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 1: {'1x1': Sequential(
+  (0): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(128, 128, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(128, 128, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(128, 128, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 2: {'1x1': Sequential(
+  (0): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(128, 128, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(128, 128, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(128, 128, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 3: {'1x1': Sequential(
+  (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(128, 256, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(256, 256, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 4: {'1x1': Sequential(
+  (0): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(256, 256, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(256, 256, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(256, 256, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 5: {'1x1': Sequential(
+  (0): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(256, 256, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(256, 256, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(256, 256, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 6: {'1x1': Sequential(
+  (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(256, 512, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(256, 512, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(512, 512, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 7: {'1x1': Sequential(
+  (0): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(512, 512, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(512, 512, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(512, 512, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 8: {'1x1': Sequential(
+  (0): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(512, 512, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(512, 512, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(512, 512, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 9: {'1x1': Sequential(
+  (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(512, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(512, 1024, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(512, 1024, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(1024, 1024, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 10: {'1x1': Sequential(
+  (0): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(1024, 1024, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(1024, 1024, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(1024, 1024, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}, 11: {'1x1': Sequential(
+  (0): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '3x3': Sequential(
+  (0): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '5x5': Sequential(
+  (0): Conv2d(1024, 1024, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+), '1x3x1': Sequential(
+  (0): Sequential(
+    (0): Conv2d(1024, 1024, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+    (1): Conv2d(1024, 1024, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+  )
+  (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True)
+  (2): ReLU(inplace)
+)}})
+# of parameters: 145,759,370
+---- begin to init controller-----
+===begin to cuda
+cuda
+finish cuda
+=======make optimizer========
+=======make optimizer========
+finish init
+[*] MODEL dir: logs/cifar10_2018-03-26_10-53-43
+[*] PARAM path: logs/cifar10_2018-03-26_10-53-43/params.json
+loss,  
+ 2.3281
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 0 
+ 2.3281
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 52.9083
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 20 
+ 2.5194
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 105.0917
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 40 
+ 2.5632
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.63 | loss 2.63 | ppl    13.88
+loss,  
+ 24.8520
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 60 
+ 0.4074
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 75.4652
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 80 
+ 0.9317
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 126.3038
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 100 
+ 1.2505
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.53 | loss 2.53 | ppl    12.50
+loss,  
+ 49.4046
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 120 
+ 0.4083
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 98.7641
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 140 
+ 0.7005
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.47 | loss 2.47 | ppl    11.83
+loss,  
+ 24.6576
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 160 
+ 0.1532
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 70.8356
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 180 
+ 0.3914
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 119.9106
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 200 
+ 0.5966
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.40 | loss 2.40 | ppl    11.00
+loss,  
+ 47.9962
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 220 
+ 0.2172
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 94.4520
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 240 
+ 0.3919
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.37 | loss 2.37 | ppl    10.64
+loss,  
+ 25.0937
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 260 
+1.00000e-02 *
+  9.6145
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 73.0871
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 280 
+ 0.2601
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 119.9894
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 300 
+ 0.3986
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.40 | loss 2.40 | ppl    11.02
+loss,  
+ 46.3649
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 320 
+ 0.1444
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 89.8139
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 340 
+ 0.2634
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.23 | loss 2.23 | ppl     9.33
+loss,  
+ 21.8935
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 360 
+1.00000e-02 *
+  6.0647
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 68.7265
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 380 
+ 0.1804
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 117.2257
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 400 
+ 0.2923
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.34 | loss 2.34 | ppl    10.43
+| epoch   0 | lr 0.00035 | R 0.78939 | entropy 1.5922 | loss 0.98577
+| epoch   0 | lr 0.00035 | R 0.83420 | entropy 1.5922 | loss 0.84242
+| epoch   0 | lr 0.00035 | R 0.82321 | entropy 1.5921 | loss 0.06216
+| epoch   0 | lr 0.00035 | R 0.94436 | entropy 1.5920 | loss 1.58690
+| epoch   0 | lr 0.00035 | R 0.95710 | entropy 1.5912 | loss -0.28076
+| epoch   0 | lr 0.00035 | R 1.10215 | entropy 1.5530 | loss 2.25816
+| epoch   0 | lr 0.00035 | R 1.24881 | entropy 1.5013 | loss 1.63411
+| epoch   0 | lr 0.00035 | R 1.23875 | entropy 1.4775 | loss 0.19599
+| epoch   0 | lr 0.00035 | R 1.26478 | entropy 1.4642 | loss -0.06514
+| epoch   0 | lr 0.00035 | R 1.28102 | entropy 1.4296 | loss -0.16370
+| epoch   0 | lr 0.00035 | R 1.35401 | entropy 1.4062 | loss 0.80392
+| epoch   0 | lr 0.00035 | R 1.32079 | entropy 1.3949 | loss -0.74481
+| epoch   0 | lr 0.00035 | R 1.40003 | entropy 1.3811 | loss 0.72195
+| epoch   0 | lr 0.00035 | R 1.37059 | entropy 1.3634 | loss -0.38013
+| epoch   0 | lr 0.00035 | R 1.38042 | entropy 1.3440 | loss -0.42114
+| epoch   0 | lr 0.00035 | R 1.42471 | entropy 1.3220 | loss 0.17732
+| epoch   0 | lr 0.00035 | R 1.41022 | entropy 1.3135 | loss -0.59973
+| epoch   0 | lr 0.00035 | R 1.43105 | entropy 1.3011 | loss 0.30373
+| epoch   0 | lr 0.00035 | R 1.45892 | entropy 1.2875 | loss 0.39675
+| epoch   0 | lr 0.00035 | R 1.43479 | entropy 1.2670 | loss -0.83237
+| epoch   0 | lr 0.00035 | R 1.45152 | entropy 1.2498 | loss 0.29940
+| epoch   0 | lr 0.00035 | R 1.44476 | entropy 1.2489 | loss -1.06944
+| epoch   0 | lr 0.00035 | R 1.47658 | entropy 1.2398 | loss 0.59712
+| epoch   0 | lr 0.00035 | R 1.49963 | entropy 1.2317 | loss 0.33995
+| epoch   0 | lr 0.00035 | R 1.48816 | entropy 1.2141 | loss -0.39517
+| epoch   0 | lr 0.00035 | R 1.53387 | entropy 1.2138 | loss 0.28761
+| epoch   0 | lr 0.00035 | R 1.53978 | entropy 1.2082 | loss -0.06854
+| epoch   0 | lr 0.00035 | R 1.51938 | entropy 1.1948 | loss -0.67120
+| epoch   0 | lr 0.00035 | R 1.47608 | entropy 1.1932 | loss -0.51691
+| epoch   0 | lr 0.00035 | R 1.54258 | entropy 1.1857 | loss 0.42880
+| epoch   0 | lr 0.00035 | R 1.55967 | entropy 1.1782 | loss 0.11442
+| epoch   0 | lr 0.00035 | R 1.55762 | entropy 1.1771 | loss -0.22013
+| epoch   0 | lr 0.00035 | R 1.53709 | entropy 1.1666 | loss -0.64381
+| epoch   0 | lr 0.00035 | R 1.56546 | entropy 1.1596 | loss -0.18627
+| epoch   0 | lr 0.00035 | R 1.54877 | entropy 1.1468 | loss -0.07453
+| epoch   0 | lr 0.00035 | R 1.59914 | entropy 1.1377 | loss 0.33797
+| epoch   0 | lr 0.00035 | R 1.58214 | entropy 1.1362 | loss -0.36645
+| epoch   0 | lr 0.00035 | R 1.61121 | entropy 1.1365 | loss -0.11917
+| epoch   0 | lr 0.00035 | R 1.58387 | entropy 1.1290 | loss -0.22279
+loss,  
+ 2.2901
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 0 
+ 2.2901
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 46.7301
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 20 
+ 2.2252
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 89.3173
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 40 
+ 2.1785
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.20 | loss 2.20 | ppl     9.02
+loss,  
+ 20.0577
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 60 
+ 0.3288
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 62.0903
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 80 
+ 0.7665
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 102.0680
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 100 
+ 1.0106
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 2.04 | loss 2.04 | ppl     7.70
+loss,  
+ 38.9344
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 120 
+ 0.3218
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 79.0570
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 140 
+ 0.5607
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 1.97 | loss 1.97 | ppl     7.15
+loss,  
+ 19.6347
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 160 
+ 0.1220
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 58.6504
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 180 
+ 0.3240
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 97.1040
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 200 
+ 0.4831
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 1.94 | loss 1.94 | ppl     6.97
+loss,  
+ 40.0184
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 220 
+ 0.1811
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 79.6451
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 240 
+ 0.3305
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 1.97 | loss 1.97 | ppl     7.18
+loss,  
+ 19.0864
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 260 
+1.00000e-02 *
+  7.3128
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 57.3379
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 280 
+ 0.2040
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 97.5836
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 300 
+ 0.3242
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 1.95 | loss 1.95 | ppl     7.04
+loss,  
+ 38.3665
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 320 
+ 0.1195
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 76.8713
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 340 
+ 0.2254
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 1.92 | loss 1.92 | ppl     6.81
+loss,  
+ 19.8163
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 360 
+1.00000e-02 *
+  5.4893
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 57.3386
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 380 
+ 0.1505
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+loss,  
+ 95.5029
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+ 400 
+ 0.2382
+[torch.cuda.FloatTensor of size 1 (GPU 0)]
+
+| epoch   0 | lr 0.10 | raw loss 1.91 | loss 1.91 | ppl     6.75
+| epoch   0 | lr 0.00035 | R 2.00467 | entropy 1.1020 | loss -4.06187
+| epoch   0 | lr 0.00035 | R 2.13195 | entropy 1.0671 | loss -0.62267

@@ -10,10 +10,11 @@ class TensorBoard(object):
         self.summary_writer = tb.FileWriter(model_dir)
 
     def image_summary(self, tag, value, step):
+        return None
         for idx, img in enumerate(value):
             summary = Summary()
             bio = BytesIO()
-
+            
             if type(img) == str:
                 img = PIL.Image.open(img)
             elif type(img) == PIL.Image.Image:
