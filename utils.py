@@ -34,18 +34,19 @@ except:
 ##########################
 
 def add_node(graph, node_id, label, shape='box', style='filled'):
+    print(label)
     if label.startswith('x'):
         color = 'white'
     elif label.startswith('h'):
         color = 'skyblue'
-    elif label == 'tanh':
+    elif label == '1x1':
         color = 'yellow'
-    elif label == 'ReLU':
+    elif label == '3x3':
         color = 'pink'
-    elif label == 'identity':
+    elif label == '1x3x1':
         color = 'orange'
     elif label == 'sigmoid':
-        color = 'greenyellow'
+        color = '5x5'
     elif label == 'avg':
         color = 'seagreen3'
     else:
@@ -61,8 +62,8 @@ def add_node(graph, node_id, label, shape='box', style='filled'):
 
 def draw_network(dag, path):
     # makedirs(os.path.dirname(path))
-    # graph = pgv.AGraph(directed=True, strict=True,
-    #                    fontname='Helvetica', arrowtype='open') # not work?
+    graph = pgv.AGraph(directed=True, strict=True,
+                       fontname='Helvetica', arrowtype='open') # not work?
     #
     # checked_ids = [-2, -1, 0]
     #
@@ -71,18 +72,22 @@ def draw_network(dag, path):
     # if -2 in dag:
     #     add_node(graph, -2, 'h[t-1]')
     #
-    # add_node(graph, 0, dag[-1][0].name)
-    #
-    # for idx in dag:
-    #     for node in dag[idx]:
-    #         if node.id not in checked_ids:
-    #             add_node(graph, node.id, node.name)
-    #             checked_ids.append(node.id)
-    #         graph.add_edge(idx, node.id)
-    #
-    # graph.layout(prog='dot')
-    # graph.draw(path)
-    pass
+    add_node(graph, 0, 'image')
+    add_node(graph, 1, dag[1][0].name)
+    graph.add_edge(0, 1)
+    check_ids = [0, 1]
+    for idx in dag:
+        if idx == 0 or idx == 1:
+            continue
+        for node in dag[idx]:
+            # if node.id not in checked_ids:
+            add_node(graph,idx, node.name)
+            checked_ids.append(node.id)
+            graph.add_edge(node.id, idx)
+            graph.add_edge(idx-1, idx)
+    graph.layout(prog='dot')
+    graph.draw(path)
+    # pass
 def make_gif(paths, gif_path, max_frame=50, prefix=""):
     import imageio
 
