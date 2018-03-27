@@ -110,7 +110,7 @@ learn_arg.add_argument('--entropy_coeff', type=float, default=1e-4)
 
 # Shared parameters
 learn_arg.add_argument('--shared_initial_step', type=int, default=0)
-learn_arg.add_argument('--shared_max_step', type=int, default=400,
+learn_arg.add_argument('--shared_max_step', type=int, default=1500,
                        help='step for shared parameters')
 # NOTE(brendan): Should be 10 for CNN architectures.
 learn_arg.add_argument('--shared_num_sample', type=int, default=1,
@@ -130,7 +130,7 @@ learn_arg.add_argument('--derive_num_sample', type=int, default=100)
 misc_arg = add_argument_group('Misc')
 misc_arg.add_argument('--load_path', type=str, default='')
 misc_arg.add_argument('--log_step', type=int, default=50)
-misc_arg.add_argument('--save_epoch', type=int, default=4)
+misc_arg.add_argument('--save_epoch', type=int, default=1)
 misc_arg.add_argument('--max_save_num', type=int, default=4)
 misc_arg.add_argument('--log_level', type=str, default='INFO', choices=['INFO', 'DEBUG', 'WARN'])
 misc_arg.add_argument('--log_dir', type=str, default='logs')

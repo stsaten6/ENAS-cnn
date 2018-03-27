@@ -20,6 +20,23 @@ import utils
 # logger = utils.get_logger()
 
 
+class AverageMeter(object):
+    """Computes and stores the average and current value"""
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.val = 0
+        self.avg = 0
+        self.sum = 0
+        self.count = 0
+
+    def update(self, val, n=1):
+        self.val = val
+        self.sum += val * n
+        self.count += n
+        self.avg = self.sum / self.count
+
 
 def _apply_penalties(extra_out, args):
     """Based on `args`, optionally adds regularization penalty terms for
@@ -212,7 +229,15 @@ class Trainer(object):
             self.train_shared()
 
             # 2. Training the controller parameters theta
-            self.train_controller()
+            #self.train_controller()
+            if self.epoch == 0:
+                with _get_no_grad_ctx_mgr():
+                    best_dag = self.derive()
+                    self.evaluate(iter(self.test_data),
+                                  best_dag,
+                                  'val_best',
+                                  max_num=self.args.batch_size*100)
+                self.save_model()
 
             if self.epoch % self.args.save_epoch == 0:
                 with _get_no_grad_ctx_mgr():
@@ -296,8 +321,8 @@ class Trainer(object):
             self.shared_optim.step()
 
             total_loss += loss.data
-            if step % 20 == 0:
-                print("loss, ", total_loss, step, total_loss /(step+1))
+            #if step % 20 == 0:
+            #    print("loss, ", total_loss, step, total_loss /(step+1))
 		
             if ((step % self.args.log_step) == 0) and (step > 0):
                 self._summarize_shared_train(total_loss, raw_total_loss)
@@ -437,7 +462,7 @@ class Trainer(object):
         """
         self.shared.eval()
         self.controller.eval()
-
+        acc = AverageMeter()
         # data = source[:max_num*self.max_length]
         total_loss = 0
         # pbar = range(0, data.size(0) - 1, self.max_length)
@@ -463,13 +488,13 @@ class Trainer(object):
             # check is self.loss wil work ?:
             total_loss += len(inputs) * self.ce(output, targets).data
             ppl = math.exp(utils.to_item(total_loss) / (count + 1))
-
+            acc.update(utils.get_accuracy(targets, output))
         val_loss = utils.to_item(total_loss) / count
         ppl = math.exp(val_loss)
         #TODO it's fix for rnn need to fix for cnn
         #self.tb.scalar_summary(f'eval/{name}_loss', val_loss, self.epoch)
         #self.tb.scalar_summary(f'eval/{name}_ppl', ppl, self.epoch)
-        print(f'eval | loss: {val_loss:8.2f} | ppl: {ppl:8.2f}')
+        print(f'eval | loss: {val_loss:8.2f} | ppl: {ppl:8.2f} | accuracy: {acc.avg:8.2f}')
 
     def derive(self, sample_num=None, valid_iter=None):
         """

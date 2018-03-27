@@ -255,3 +255,10 @@ def backup_file(path):
 
     os.rename(path, new_path)
     print("[*] {} has backup: {}".format(path, new_path))
+
+def get_accuracy(targets, outputs):
+    targets = targets.cpu().data.numpy()
+    outputs = outputs.cpu().data.numpy()
+    outputs = np.argmax(outputs, axis = 1)
+    acc = np.sum(targets == outputs) / len(targets)
+    return acc
