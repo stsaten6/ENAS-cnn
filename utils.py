@@ -45,10 +45,12 @@ def add_node(graph, node_id, label, shape='box', style='filled'):
         color = 'pink'
     elif label == '1x3x1':
         color = 'orange'
-    elif label == 'sigmoid':
-        color = '5x5'
+    elif label == '5x5':
+        color = 'red'
     elif label == 'avg':
         color = 'seagreen3'
+    elif label == 'pool2x2':
+        color = 'skyblue'
     else:
         color = 'white'
 
@@ -85,9 +87,45 @@ def draw_network(dag, path):
             checked_ids.append(node.id)
             graph.add_edge(node.id, idx)
             graph.add_edge(idx-1, idx)
+
     graph.layout(prog='dot')
     graph.draw(path)
     # pass
+def draw_network_pool(dag, path):
+    # makedirs(os.path.dirname(path))
+    graph = pgv.AGraph(directed=True, strict=True,
+                       fontname='Helvetica', arrowtype='open') # not work?
+    #
+    # checked_ids = [-2, -1, 0]
+    #
+    # if -1 in dag:
+    #     add_node(graph, -1, 'x[t]')
+    # if -2 in dag:
+    #     add_node(graph, -2, 'h[t-1]')
+    #
+    add_node(graph, 0, 'image')
+    add_node(graph, 1, dag[1][0].name)
+    graph.add_edge(0, 1)
+    check_ids = [0, 1]
+    node_add = 0
+    for idx in dag:
+        if idx == 0 or idx == 1:
+            continue
+        for node in dag[idx]:
+            # if node.id not in checked_ids:
+            add_node(graph,idx+node_add, node.name)
+            # checked_ids.append(node.id)
+            temp_id = node.id
+            temp_id = node.id + (idx-1)//3
+            graph.add_edge(temp_id, idx+node_add)
+            graph.add_edge(idx-1+node_add, idx+node_add)
+        if idx%3 == 0:
+            print(idx)
+            node_add +=1
+            add_node(graph, idx+node_add , 'pool2x2')
+            graph.add_edge(idx+node_add - 1, idx+node_add)
+    graph.layout(prog='dot')
+    graph.draw(path)
 def make_gif(paths, gif_path, max_frame=50, prefix=""):
     import imageio
 
