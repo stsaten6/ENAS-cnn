@@ -40,7 +40,7 @@ or you can use your own dataset by placing images like:
     │   └── valid.txt
     ├── YOUR_IMAGE_DATASET
     │   ├── test
-    │   │   ├── xxx.jpg 
+    │   │   ├── xxx.jpg
     │   │   ├── yyy.jpg
     │   │   └── ...
     │   ├── train
@@ -76,7 +76,7 @@ The CNN network **ENAS** discovered for `CIFAR-10` dataset:
 #### macro
 Due to the limited of computational resources, only use 12 layers to build the model.
 Best discovered ENAS cell for `cifar 10` at epoch 40:
-<img src="photos/11.png" alt="cifar" width="30%">
+<img src="./photos/11.png" alt="cifar" width="30%">
 
 #### micro
 (in process))
