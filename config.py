@@ -63,7 +63,7 @@ net_arg.add_argument('--norm_stabilizer_fixed_point', type=float, default=5.0)
 # Shared parameters for CIFAR
 net_arg.add_argument('--cnn_hid', type=int, default=64)
 net_arg.add_argument('--shared_cnn_types', type=eval,
-                     default="['1x1', '3x3', '5x5', '1x3x1']")
+                     default="['1x1', '1x3x1', '3x1x3', '3x3', 'depthwise_fat_3x3', 'depthwise_short_3x3', '5x5', '7x7' ]")
 net_arg.add_argument('--cnn_channel', type=list, default=[3, 128, 256, 512, 1024, 1024])# repeat last one for better code style
 net_arg.add_argument('--cnn_num_blocks', type=list, default=[3,3,3,3])
 

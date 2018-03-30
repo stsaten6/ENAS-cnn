@@ -10,20 +10,18 @@ from utils import get_logger, get_variable, keydefaultdict
 import copy
 
 # logger = get_logger()
-
-
-def conv3x3(in_planes, out_planes, stride=1):
-    return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
-                     padding=1, bias=False)
-
-def conv5x5(in_planes, out_planes, stride=1):
-    return nn.Conv2d(in_planes, out_planes, kernel_size=5, stride=stride,
-                     padding=2, bias=False)
+#TODO add comment add micro/block way
+#TODO add downsample to dag
+#TODO add segmentation on datasets VOC
+#TODO shared weights with all of conv
 
 def conv1x1(in_planes, out_planes, stride=1):
     return nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=stride,
                      padding=0, bias=False)
 
+def conv3x3(in_planes, out_planes, stride=1):
+    return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
+                     padding=1, bias=False)
 def conv1x3x1(in_planes, out_planes, stride=1):
     #TODO 1x3 3x1 kernel size
     return nn.Sequential(
@@ -33,6 +31,44 @@ def conv1x3x1(in_planes, out_planes, stride=1):
                     padding=(1, 0), bias=False),
     )
 
+def conv3x1x3(in_planes, out_planes, stride=1):
+    return nn.Sequential(
+            nn.Conv2d(in_planes, out_planes, kernel_size = (3,1), stride=stride,
+                    padding=(1, 0), bias=False),
+            nn.Conv2d(in_planes, out_planes, kernel_size = (1,3), stride=stride,
+                    padding=(0, 1), bias=False)
+    )
+def depthwise_short_conv3x3(in_planes, out_planes, stride=1):
+    return nn.Sequential(
+            nn.Conv2d(in_planes, out_planes, 1, stride=1,
+                    padding=0, bias=False)
+            nn.Conv2d(out_planes, out_planes, 3, stride=stride,
+                    padding=1, bias=False)
+    )
+def depthwise_fat_conv3x3(in_planes, out_planes, stride=1):
+    return nn.Sequential(
+            nn.Conv2d(in_planes, in_planes, 3, stride=stride,
+                    padding=1, bias=False)
+            nn.Conv2d(in_planes, out_planes, 1, stride=1,
+                    padding=0, bias=False)
+    )
+
+
+def conv5x5(in_planes, out_planes, stride=1):
+    return nn.Conv2d(in_planes, out_planes, kernel_size=5, stride=stride,
+                     padding=2, bias=False)
+
+
+def conv7x7(in_planes, out_planes, stride=1):
+    return nn.Conv2d(in_planes, out_planes, kernel_size=7, stride=stride,
+                     padding=1, bias=False)
+
+
+def maxpool(kernel_size, stride):
+    return nn.MaxPool2d(kernel_size, stride=stride)
+
+def avgpool(kernel_size, stride):
+    return nn.AvgPool2d(kernel_size, stride=stride)
 
 def isnan(tensor):
     return np.isnan(tensor.cpu().data.numpy()).sum() > 0
@@ -45,8 +81,16 @@ def conv(kernel, in_planes, out_planes):
         _conv = conv3x3
     elif kernel == '1x3x1':
         _conv = conv1x3x1
-    elif kernel == '5x5':
+    elif kernel == '3x1x3':
+        _conv = conv3x1x3
+    elif kernel == 'depthwise_fat_3x3':
+        _conv = depthwise_fat_3x3
+    elif kernel == 'depthwise_short_3x3':
+        _conv = depthwise_short_conv_3x3
+    elif kernel == '5x5'
         _conv = conv5x5
+    elif kernel == '7x7':
+        _conv = conv7x7
     else:
         raise NotImplementedError(f"Unknown kernel size: {kernel}")
     return nn.Sequential(
@@ -59,51 +103,79 @@ def conv(kernel, in_planes, out_planes):
 
 class CNN(models.shared_base.SharedModel):
     """Shared CNN model."""
-    def __init__(self, args, images):
+    def __init__(self, args, images, class_num):
         # super(CNN, self).__init__()
         models.shared_base.SharedModel.__init__(self)
         self.args = args
         self.images = images  #imagedataset
         self.channel = self.args.cnn_channel #[3, 128, 256, 512, 1024， 1024]
-        in_planes = 3
-        out_planes = 128
-        self.conv = defaultdict(dict)
-        self.channel_bridge = defaultdict(dict)
-        #self.args.cnn_num_blocks --> [3, 3, 3, 3]
-        #NOTE create shared convolution
-        for layer_idx, layer_num in enumerate(self.args.cnn_num_blocks):
-        #TODO default dict useage change mode
-            for block_idx in range(layer_num):
-                # self.conv[layer_idx][block_idx] = list()
-                if block_idx == 0:
-                    out_planes = self.args.cnn_channel[layer_idx + 1]
-                # for jdx, cnn_type in enumerate(self.args.shared_cnn_types):
-                #     self.conv[layer_idx][block_idx].append(conv(cnn_type, in_planes, out_planes))
-                abs_layer_idx = block_idx + sum(self.args.cnn_num_blocks[:layer_idx])
-                for jdx, cnn_type in enumerate(self.args.shared_cnn_types):
-                    self.conv[abs_layer_idx][cnn_type] = conv(cnn_type, in_planes, out_planes)
-                in_planes = out_planes
-            for previous_idx in range(layer_idx + 1):
-                self.channel_bridge[layer_idx][previous_idx] = conv('1x1',
-                                                                    self.channel[previous_idx],
-                                                                    self.channel[layer_idx+1])
-        self._conv = nn.ModuleList([self.conv[idx][jdx]
-                                   for idx in self.conv
-                                   for jdx in self.conv[idx]])
-        self._channel_bridge = nn.ModuleList([self.channel_bridge[idx][jdx]
-                                              for idx in self.channel_bridge
-                                              for jdx in self.channel_bridge[idx]])
-        print(self.conv)
-        self.maxpool = torch.nn.MaxPool2d(2, 2)
-        # self.predict = torch.nn.Conv2d(1024,10, 1)# for classification
-        #TODO change downsampling from avgpool to bilinear
-        self.avgpool = torch.nn.AvgPool2d(kernel_size = 4, stride=1)
-        self.downsample = torch.nn.AvgPool2d(kernel_size=2, stride=2)
-        #use xavier to initialize parameter
-        self.predict = torch.nn.Linear(1024, 10)
-        
-        self.reset_parameters()
-        print(f'# of parameters: {format(self.num_parameters, ",d")}')
+
+        if args.cnn_network_type == 'macro':
+            in_planes = 3
+            # out_planes = 128
+            out_planes = self.channel[1]
+            self.kernel = defaultdict(dict)  #Change to use kernel because will add pooling layer
+            #TODO make for two way of skip connection : add(resnet) concatation(densenet)
+            self.channel_bridge = defaultdict(dict) # ues for skip connection
+            self.downsample = defaultdict(dict)
+            #self.args.cnn_num_blocks --> [3, 3, 3, 3]
+            #NOTE create shared convolution
+            #TODO 1. add max pooling 2. change to a kind to
+            for block_idx, layer_num in enumerate(self.args.cnn_num_blocks):
+            #TODO default dict useage change mode
+                for layer_idx in range(layer_num):
+                    # self.conv[layer_idx][block_idx] = list()
+                    #NOTE( lianqing) mean that this is the first layer in one of the block
+                    if layer_idx == 0:
+                        out_planes = self.args.cnn_channel[block_idx + 1]
+                    # for jdx, cnn_type in enumerate(self.args.shared_cnn_types):
+                    #     self.conv[layer_idx][block_idx].append(conv(cnn_type, in_planes, out_planes))
+                    abs_layer_idx = layer_idx + sum(self.args.cnn_num_blocks[:layer_idx])
+                    for jdx, cnn_type in enumerate(self.args.shared_cnn_types):
+                        self.conv[abs_layer_idx][cnn_type] = conv(cnn_type, in_planes, out_planes)
+                    in_planes = out_planes
+                for previous_idx in range(block_idx + 1):
+                    self.channel_bridge[block_idx][previous_idx] = conv('1x1',
+                                                                        self.channel[previous_idx],
+                                                                        self.channel[block_idx+1])
+            #NOTE add parameter to nn to put in cuda
+            self._conv = nn.ModuleList([self.conv[idx][jdx]
+                                       for idx in self.conv
+                                       for jdx in self.conv[idx]])
+            self._channel_bridge = nn.ModuleList([self.channel_bridge[idx][jdx]
+                                                  for idx in self.channel_bridge
+                                                  for jdx in self.channel_bridge[idx]])
+            # print(self.conv)
+            # self.maxpool = torch.nn.MaxPool2d(2, 2)
+            # self.predict = torch.nn.Conv2d(1024,10, 1)# for classification
+            #TODO change downsampling from avgpool to bilinear
+            for downsample_type, downsample_idx in enumerate(self.args.downsample_types):
+                self.downsample[downsample_type] = conv(downsample_type, )
+            self.avgpool = torch.nn.AvgPool2d(kernel_size = 4, stride=1)
+            # self.downsample = torch.nn.AvgPool2d(kernel_size=2, stride=2)
+            #use xavier to initialize parameter
+            self.predict = torch.nn.Linear(1024, class_num)
+
+            self.reset_parameters()
+            print(f'# of parameters: {format(self.num_parameters, ",d")}')
+        elif args.cnn_network_type == 'block':
+            self.kernel = list()
+            for _ in range(self.args.block_num):
+                self.kernel.append(defaultdict(dict))
+            self.channel_bridge = defaultdict(dict)#use for control concat
+            self.downsample = defaultdict(dict)
+            in_planes = 3
+            out_planes = self.channel[1]
+            for block_v1_idx in range(slef.args.block_num):
+                kernel = self.kernel[block_v1_idx]
+                if layer_idx == 0:
+                    out_planes = self.args.cnn_channel[block_v1_idx]
+
+
+        else:
+            raise NotImplementedError(f"Unknown shared network type")
+
+
 
     def forward(self,
                 inputs,
@@ -234,7 +306,7 @@ class CNN(models.shared_base.SharedModel):
         ues the method in resenet
         https://github.com/pytorch/vision/blob/master/torchvision/models/resnet.py#L112-L118
         '''
-        
+
         for m in self.modules():
             #m.cuda()
             if isinstance(m, nn.Conv2d):
