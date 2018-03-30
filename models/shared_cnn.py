@@ -158,19 +158,19 @@ class CNN(models.shared_base.SharedModel):
 
             self.reset_parameters()
             print(f'# of parameters: {format(self.num_parameters, ",d")}')
-        elif args.cnn_network_type == 'block':
-            self.kernel = list()
-            for _ in range(self.args.block_num):
-                self.kernel.append(defaultdict(dict))
-            self.channel_bridge = defaultdict(dict)#use for control concat
-            self.downsample = defaultdict(dict)
-            in_planes = 3
-            out_planes = self.channel[1]
-            for block_v1_idx in range(slef.args.block_num):
-                kernel = self.kernel[block_v1_idx]
-                if layer_idx == 0:
-                    out_planes = self.args.cnn_channel[block_v1_idx]
-
+        elif args.cnn_network_type == 'micro':
+            # self.kernel = list()
+            # for _ in range(self.args.block_num):
+            #     self.kernel.append(defaultdict(dict))
+            # self.channel_bridge = defaultdict(dict)#use for control concat
+            # self.downsample = defaultdict(dict)
+            # in_planes = 3
+            # out_planes = self.channel[1]
+            # for block_v1_idx in range(slef.args.block_num):
+            #     kernel = self.kernel[block_v1_idx]
+            #     if layer_idx == 0:
+            #         out_planes = self.args.cnn_channel[block_v1_idx]
+            pass
 
         else:
             raise NotImplementedError(f"Unknown shared network type")

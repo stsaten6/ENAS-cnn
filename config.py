@@ -121,7 +121,7 @@ learn_arg.add_argument('--shared_decay', type=float, default=0.96)
 learn_arg.add_argument('--shared_decay_after', type=float, default=15)
 learn_arg.add_argument('--shared_l2_reg', type=float, default=1e-7)
 learn_arg.add_argument('--shared_grad_clip', type=float, default=0.25)
-
+learn_arg.add_argument('--cnn_network_type', type=str, default='macro')
 # Deriving Architectures
 learn_arg.add_argument('--derive_num_sample', type=int, default=100)
 
