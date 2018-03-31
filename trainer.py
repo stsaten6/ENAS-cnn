@@ -1,7 +1,7 @@
 """The module for training ENAS."""
 import contextlib
 #简化with 语句
-#TODO understand how to use contextlib  貌似代码里没用到?
+#TODO understand how to use contextlib
 import glob
 import math
 import os
@@ -323,7 +323,7 @@ class Trainer(object):
             total_loss += loss.data
             #if step % 20 == 0:
             #    print("loss, ", total_loss, step, total_loss /(step+1))
-		
+
             if ((step % self.args.log_step) == 0) and (step > 0):
                 self._summarize_shared_train(total_loss, raw_total_loss)
                 raw_total_loss = 0

@@ -15,12 +15,12 @@
 # Entropy decrease fast and increase continuously
 #python main.py --ema_baseline_decay=0.95 --shared_initial_step=150 --reward_c=80 &
 #sleep 2
-
-#python main.py --ema_baseline_decay=0.9 --shared_initial_step=150 --reward_c=80 --ppl_square=True &
-sleep 2
-
-#python main.py --ema_baseline_decay=0.92 --shared_initial_step=150 --reward_c=80 --ppl_square=True &
-sleep 2
+#
+# #python main.py --ema_baseline_decay=0.9 --shared_initial_step=150 --reward_c=80 --ppl_square=True &
+# sleep 2
+#
+# #python main.py --ema_baseline_decay=0.92 --shared_initial_step=150 --reward_c=80 --ppl_square=True &
+# sleep 2
 
 srun -p Segmentation --gres=gpu:1 --ntasks-per-node=2 python -u main.py --ema_baseline_decay=0.95 --shared_initial_step=150 --reward_c=80 --ppl_square=True &
-sleep 2
+# sleep 2
